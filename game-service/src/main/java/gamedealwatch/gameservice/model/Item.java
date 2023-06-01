@@ -18,11 +18,14 @@ public class Item {
 
     private String game;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "store")
+    private String url;
+
+    @Enumerated(EnumType.STRING)
     private Store store;
 
     @OneToMany(targetEntity = PriceData.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PriceData> prices;
+
+
 
 }

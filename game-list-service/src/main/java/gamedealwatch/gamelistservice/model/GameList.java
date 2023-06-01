@@ -10,16 +10,16 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "Game_List")
+@Table(name = "Game_List", uniqueConstraints = @UniqueConstraint(columnNames = {"userEmail"}))
 public class GameList {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private Long userID;
+    private String userEmail;
 
-    @ElementCollection
-    private List<Long> itemIDs;
+    @OneToMany(targetEntity = ListItem.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ListItem> items;
 
 }
