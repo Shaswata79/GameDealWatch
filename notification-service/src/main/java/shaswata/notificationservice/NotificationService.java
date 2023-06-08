@@ -19,7 +19,7 @@ public class NotificationService {
         TimeUnit.SECONDS.sleep(5);
         notificationRepository.save(
                 Notification.builder()
-                        .customerId(notificationRequest.getCustomerId())
+                        .customerId(notificationRequest.getCustomerId().longValue())
                         .customerEmail(notificationRequest.getCustomerEmail())
                         .sender("Game Deal Watch")
                         .message(notificationRequest.getMessage())

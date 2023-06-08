@@ -2,8 +2,12 @@ package shaswata.useraccountservice.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import shaswata.amqp.RabbitMQMessageProducer;
+//import shaswata.amqp.RabbitMQMessageProducer;
+//import shaswata.useraccountservice.dto.NotificationRequest;
 import shaswata.useraccountservice.dto.NotificationRequest;
 import shaswata.useraccountservice.dto.UserDto;
 import shaswata.useraccountservice.model.UserAccount;
@@ -14,8 +18,9 @@ import shaswata.useraccountservice.repository.UserRepository;
 public class UserService {
 
     private final UserRepository userRepo;
-    private final NotificationClient notificationClient;
-    private final RabbitMQMessageProducer rabbitMQMessageProducer;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+//    private final NotificationClient notificationClient;
+//    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
     @Transactional
@@ -38,14 +43,16 @@ public class UserService {
         user.setListID(null);
 
         user = userRepo.save(user);
+// RabbitMQ
+//        NotificationRequest notificationRequest = new NotificationRequest(user.getId(), user.getEmail(), "Your account has been created!");
+//        rabbitMQMessageProducer.publish(notificationRequest,
+//                "internal.exchange",
+//                "internal.notification.routing-key");
         NotificationRequest notificationRequest = new NotificationRequest(user.getId(), user.getEmail(), "Your account has been created!");
-        rabbitMQMessageProducer.publish(notificationRequest,
-                "internal.exchange",
-                "internal.notification.routing-key");
+        kafkaTemplate.send("gdwTopic", notificationRequest);
         return UserService.userToDTO(user);
 
     }
-
 
 
     @Transactional
