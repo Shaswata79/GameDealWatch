@@ -1,18 +1,18 @@
 package shaswata.useraccountservice.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import shaswata.useraccountservice.dto.AdminDto;
 import shaswata.useraccountservice.dto.UserDto;
 import shaswata.useraccountservice.service.AdminService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user-service/admin")
+@RequestMapping("/accounts/admin")
 public class AdminController {
 
     private final AdminService adminService;

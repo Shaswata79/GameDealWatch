@@ -1,14 +1,14 @@
 package shaswata.useraccountservice.service;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import shaswata.useraccountservice.dto.AdminDto;
 import shaswata.useraccountservice.dto.UserDto;
 import shaswata.useraccountservice.model.AdminAccount;
 import shaswata.useraccountservice.model.UserAccount;
 import shaswata.useraccountservice.repository.AdminRepository;
 import shaswata.useraccountservice.repository.UserRepository;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +19,6 @@ public class AdminService {
 
     private final UserRepository userRepo;
     private final AdminRepository adminRepo;
-    //private final PasswordEncoder passwordEncoder;
 
 
     @Transactional

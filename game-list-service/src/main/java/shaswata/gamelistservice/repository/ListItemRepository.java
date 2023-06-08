@@ -1,9 +1,9 @@
 package shaswata.gamelistservice.repository;
 
-import shaswata.gamelistservice.model.GameList;
-import shaswata.gamelistservice.model.ListItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import shaswata.gamelistservice.model.GameList;
+import shaswata.gamelistservice.model.ListItem;
 
 import java.util.List;
 

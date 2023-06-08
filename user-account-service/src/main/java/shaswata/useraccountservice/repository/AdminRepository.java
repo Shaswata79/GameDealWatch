@@ -1,10 +1,8 @@
 package shaswata.useraccountservice.repository;
 
-import shaswata.useraccountservice.model.AdminAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-
 import org.springframework.stereotype.Repository;
+import shaswata.useraccountservice.model.AdminAccount;
 
 import java.util.List;
 

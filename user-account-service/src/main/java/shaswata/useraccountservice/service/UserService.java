@@ -1,18 +1,21 @@
 package shaswata.useraccountservice.service;
 
-import shaswata.useraccountservice.dto.UserDto;
-import shaswata.useraccountservice.model.UserAccount;
-import shaswata.useraccountservice.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import shaswata.amqp.RabbitMQMessageProducer;
+import shaswata.useraccountservice.dto.NotificationRequest;
+import shaswata.useraccountservice.dto.UserDto;
+import shaswata.useraccountservice.model.UserAccount;
+import shaswata.useraccountservice.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepo;
-    //private final PasswordEncoder passwordEncoder;
+    private final NotificationClient notificationClient;
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
     @Transactional
@@ -34,7 +37,11 @@ public class UserService {
         user.setPassword(dto.getPassword());
         user.setListID(null);
 
-        userRepo.save(user);
+        user = userRepo.save(user);
+        NotificationRequest notificationRequest = new NotificationRequest(user.getId(), user.getEmail(), "Your account has been created!");
+        rabbitMQMessageProducer.publish(notificationRequest,
+                "internal.exchange",
+                "internal.notification.routing-key");
         return UserService.userToDTO(user);
 
     }

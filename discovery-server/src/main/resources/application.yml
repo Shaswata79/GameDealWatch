@@ -1,0 +1,21 @@
+server:
+  port: 8761
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+
+spring:
+  application:
+    name: discovery-server
+
+
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    sampling:
+      probability: 1.0

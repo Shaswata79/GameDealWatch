@@ -1,19 +1,19 @@
 package shaswata.gameservice.controller;
 
 
-import shaswata.gameservice.dto.ItemDto;
-import shaswata.gameservice.dto.PriceDataDto;
-import shaswata.gameservice.service.UserGameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import shaswata.gameservice.dto.ItemDto;
+import shaswata.gameservice.dto.PriceDataDto;
+import shaswata.gameservice.service.UserGameService;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/game-service/user")
+@RequestMapping("/game/user")
 public class UserController {
 
     private final UserGameService userGameService;

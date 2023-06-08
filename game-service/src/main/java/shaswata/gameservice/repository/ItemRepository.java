@@ -1,9 +1,9 @@
 package shaswata.gameservice.repository;
 
-import shaswata.gameservice.model.Item;
-import shaswata.gameservice.model.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import shaswata.gameservice.model.Item;
+import shaswata.gameservice.model.Store;
 
 import java.util.List;
 

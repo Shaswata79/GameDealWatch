@@ -1,18 +1,18 @@
 package shaswata.gamelistservice.controller;
 
-import shaswata.gamelistservice.dto.GameListDto;
-import shaswata.gamelistservice.service.UserListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import shaswata.gamelistservice.dto.GameListDto;
+import shaswata.gamelistservice.service.UserListService;
 
 import java.util.List;
 
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/list-service/user")
+@RequestMapping("/list/user")
 public class UserController {
 
     private final UserListService userListService;

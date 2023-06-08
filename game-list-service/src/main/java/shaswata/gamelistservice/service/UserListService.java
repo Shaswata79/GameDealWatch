@@ -1,25 +1,16 @@
 package shaswata.gamelistservice.service;
 
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import shaswata.gamelistservice.dto.GameListDto;
 import shaswata.gamelistservice.dto.ItemDto;
-import shaswata.gamelistservice.dto.UserDto;
 import shaswata.gamelistservice.model.GameList;
 import shaswata.gamelistservice.model.ListItem;
 import shaswata.gamelistservice.repository.GameListRepository;
 import shaswata.gamelistservice.repository.ListItemRepository;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,9 +22,10 @@ public class UserListService extends ListService{
 
     private final ListItemRepository listItemRepo;
     private final GameListRepository gameListRepo;
+    private final GameServiceClient gameServiceClient;
+    private final UserAccountServiceClient userAccountServiceClient;
 
-    @Autowired
-    private RestTemplate restTemplate;
+
 
     @Transactional
     public GameListDto createList(String email, List<String> itemIDs) throws Exception {
@@ -45,14 +37,14 @@ public class UserListService extends ListService{
         }
 
         GameList gameList = new GameList();
-        List<ItemDto> items = getItems(itemIDs);
+        List<ItemDto> items = gameServiceClient.getItems(itemIDs);
         System.out.println(Arrays.toString(items.toArray()));
         List<ListItem> itemList = setThresholds(items);
         gameList.setItems(itemList);
         gameList.setUserEmail(email);
 
         gameListRepo.save(gameList);
-        updateUserAccount(email, gameList.getId());
+        userAccountServiceClient.updateUserListID(email, gameList.getId().toString());
         return gameListToDTO(gameList);
     }
 
@@ -69,7 +61,7 @@ public class UserListService extends ListService{
             throw new Exception("The user does not have a list!");
         }
 
-        ItemDto itemDto = getItem(itemID);
+        ItemDto itemDto = gameServiceClient.getItem(itemID.toString());
         for(ListItem item : gameList.getItems()){
             if(item.getItemID() == itemID){
                 throw new Exception("User's game list already contains the item!");
@@ -134,44 +126,7 @@ public class UserListService extends ListService{
     }
 
 
-    private void updateUserAccount(String email, Long gameListID) throws Exception {
-        RestTemplate restTemplate = new RestTemplate();
-        MultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
-        requestParams.add("email", email);
-        requestParams.add("listID", gameListID.toString());
-        try {
-            restTemplate.postForObject("http://localhost:8082/user-service/user//updateListID", requestParams, UserDto.class);
-        }catch (RestClientException e){
-            throw new Exception(e.getMessage());
-        }
-
-    }
-
-    private List<ItemDto> getItems(List<String> itemIDs){
-        String baseUrl = "http://localhost:8081/game-service/user/getItems";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl).queryParam("ids", itemIDs);
-        String url = builder.toUriString();
-
-        ParameterizedTypeReference<List<ItemDto>> typeRef = new ParameterizedTypeReference<List<ItemDto>>() {};
-        ResponseEntity<List<ItemDto>> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, typeRef);
-        List<ItemDto> itemDtoList = responseEntity.getBody();
-
-        return itemDtoList;
-    }
-
-    private ItemDto getItem(Long itemID){
-        String baseUrl = "http://localhost:8081/game-service/user/getItem";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl).queryParam("id", itemID);
-        String url = builder.toUriString();
-
-        ParameterizedTypeReference<ItemDto> typeRef = new ParameterizedTypeReference<ItemDto>() {};
-        ResponseEntity<ItemDto> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, typeRef);
-        ItemDto itemDto = responseEntity.getBody();
-
-        return itemDto;
-    }
-
-
+    @Transactional
     private List<ListItem> setThresholds(List<ItemDto> items){
         List<ListItem> listItems = new ArrayList<>();
         for(ItemDto item : items){

@@ -1,17 +1,20 @@
 package shaswata.gameservice.controller;
 
-import shaswata.gameservice.dto.ItemDto;
-import shaswata.gameservice.service.StoreGameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import shaswata.gameservice.dto.ItemDto;
+import shaswata.gameservice.service.StoreGameService;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/game-service/store")
+@RequestMapping("/game/store")
 public class StoreController {
 
     private final StoreGameService storeGameService;

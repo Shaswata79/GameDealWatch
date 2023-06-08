@@ -1,15 +1,15 @@
 package shaswata.useraccountservice.controller;
 
-import shaswata.useraccountservice.dto.UserDto;
-import shaswata.useraccountservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import shaswata.useraccountservice.dto.UserDto;
+import shaswata.useraccountservice.service.UserService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user-service/user")
+@RequestMapping("/accounts/user")
 public class UserController {
 
     private final UserService userService;

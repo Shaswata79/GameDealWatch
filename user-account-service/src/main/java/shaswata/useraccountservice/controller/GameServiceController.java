@@ -1,8 +1,6 @@
 package shaswata.useraccountservice.controller;
 
 
-import shaswata.useraccountservice.dto.UserDto;
-import shaswata.useraccountservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +8,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import shaswata.useraccountservice.dto.UserDto;
+import shaswata.useraccountservice.service.UserService;
 
 @RestController
-@RequestMapping("/user-service/game-list")
+@RequestMapping("/accounts/gamelist")
 @RequiredArgsConstructor
 public class GameServiceController {
 

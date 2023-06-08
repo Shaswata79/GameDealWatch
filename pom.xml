@@ -20,6 +20,10 @@
 		<module>game-service</module>
 		<module>game-list-service</module>
 		<module>user-account-service</module>
+		<module>discovery-server</module>
+		<module>notification-service</module>
+		<module>api-gateway</module>
+		<module>amqp</module>
 	</modules>
 
 	<properties>
@@ -29,11 +33,13 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<spring.boot.maven.plugin.version>3.0.7</spring.boot.maven.plugin.version>
 		<spring.boot.dependencies.version>3.0.7</spring.boot.dependencies.version>
+		<spring.cloud-version>2022.0.3</spring.cloud-version>
 	</properties>
 
 
 	<dependencyManagement>
 		<dependencies>
+
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
@@ -41,6 +47,15 @@
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud-version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -50,6 +65,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 
 		<dependency>
@@ -59,9 +80,21 @@
 		</dependency>
 
 		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.zipkin.reporter2</groupId>
+			<artifactId>zipkin-reporter-brave</artifactId>
+		</dependency>
+
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+            <version>3.1.0</version>
+            <scope>test</scope>
 		</dependency>
 
 	</dependencies>
