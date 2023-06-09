@@ -13,3 +13,19 @@ services:
       - "5672:5672"
       - "15672:15672"
 
+#  db:
+#    image: 'postgres:13.1-alpine'
+#    container_name: db
+#    volumes:
+#      - data-volume:/var/lib/postgresql/data
+#    ports:
+#      - 5432:5432       # Forward the container port 5432 localhost:5432
+#
+#    #Environment variable for DB name, user and password
+#    environment:
+#      - POSTGRES_DB=compose-postgres-user
+#      - POSTGRES_USER=compose-postgres
+#      - POSTGRES_PASSWORD=compose-postgres
+
+#volumes:
+#  data-volume:
