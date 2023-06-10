@@ -11,10 +11,10 @@ import shaswata.gamelistservice.dto.UserDto;
 @FeignClient("user-account-service")
 public interface UserAccountServiceClient {
 
-    @PostMapping (path = "/user/updateListID")
+    @PostMapping (path = "/accounts/user/updateListID")
     UserDto updateUserListID(@RequestParam("email") String email, @RequestParam("listID") String listID);
 
-    @GetMapping("/user/get/{email}")
+    @GetMapping("/accounts/user/get/{email}")
     UserDto viewUser(@PathVariable("email") String email);
 
 }

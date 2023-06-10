@@ -11,10 +11,10 @@ import java.util.List;
 @FeignClient("game-service")
 public interface GameServiceClient {
 
-    @GetMapping("/user/getItems")
+    @GetMapping("/game/user/getItems")
     List<ItemDto> getItems(@RequestParam List<String> ids);
 
-    @GetMapping("/user/getItem")
+    @GetMapping("/game/user/getItem")
     ItemDto getItem(@RequestParam String id);
 
 }

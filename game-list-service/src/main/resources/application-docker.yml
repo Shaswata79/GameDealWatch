@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: game-list-service
+  datasource:
+    url: jdbc:postgresql://postgres-db:5432/gamelistdb
+    username: shaswata79
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  zipkin:
+    base-url: http://zipkin:9411
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    sampling:
+      probability: 1.0
