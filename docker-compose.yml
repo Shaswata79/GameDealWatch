@@ -47,30 +47,30 @@ services:
     networks:
       - spring
 
-  discovery-server:
-    image: shaswata79/discovery-server:latest
-    container_name: discovery-server
-    ports:
-      - "8761:8761"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - zipkin
-
-  api-gateway:
-    image: shaswata79/api-gateway:latest
-    container_name: api-gateway
-    ports:
-      - "8090:8090"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - zipkin
-      - discovery-server
+#  discovery-server:
+#    image: shaswata79/discovery-server:latest
+#    container_name: discovery-server
+#    ports:
+#      - "8761:8761"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#    depends_on:
+#      - zipkin
+#
+#  api-gateway:
+#    image: shaswata79/api-gateway:latest
+#    container_name: api-gateway
+#    ports:
+#      - "8090:8090"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#    depends_on:
+#      - zipkin
+#      - discovery-server
 
   user-account-service:
     image: shaswata79/user-account-service:latest
@@ -84,7 +84,7 @@ services:
       - postgres
     depends_on:
       - zipkin
-      - discovery-server
+#      - discovery-server
       - postgres
       - rabbitmq
 
@@ -100,7 +100,7 @@ services:
       - postgres
     depends_on:
       - zipkin
-      - discovery-server
+#      - discovery-server
       - postgres
       - rabbitmq
 
@@ -116,7 +116,7 @@ services:
       - postgres
     depends_on:
       - zipkin
-      - discovery-server
+#      - discovery-server
       - postgres
       - rabbitmq
 
@@ -132,7 +132,7 @@ services:
       - postgres
     depends_on:
       - zipkin
-      - discovery-server
+#      - discovery-server
       - postgres
       - rabbitmq
 

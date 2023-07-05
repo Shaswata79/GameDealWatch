@@ -1,11 +1,11 @@
 server:
-  port: 8080
+  port: 8083
 
 spring:
   application:
-    name: game-list-service
+    name: notification-service
   datasource:
-    url: jdbc:postgresql://postgres-db:5432/gamelistdb
+    url: jdbc:postgresql://postgres:5432/notification
     username: shaswata79
     password: password
     driver-class-name: org.postgresql.Driver
@@ -19,27 +19,21 @@ spring:
     show-sql: true
   zipkin:
     base-url: http://zipkin:9411
-
+  rabbitmq:
+    addresses: rabbitmq:5672
 
 eureka:
   client:
     service-url:
       defaultZone: http://discovery-server:8761/eureka
     fetch-registry: true
-    register-with-eureka: true
+    register-with-eureka: false
+    enabled: false
 
-management:
-  endpoint:
-    web:
-      exposure:
-        include: "*"
-  tracing:
-    sampling:
-      probability: 1.0
-
-
-clients:
-  game:
-    url: http://game-service:8081
-  accounts:
-    url: http://user-account-service:8082
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key

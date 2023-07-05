@@ -8,7 +8,10 @@ import shaswata.gamelistservice.dto.ItemDto;
 import java.util.List;
 
 
-@FeignClient("game-service")
+@FeignClient(
+        name = "game",
+        url = "${clients.game.url}"
+)
 public interface GameServiceClient {
 
     @GetMapping("/game/user/getItems")

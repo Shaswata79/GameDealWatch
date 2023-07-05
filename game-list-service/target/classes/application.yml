@@ -38,3 +38,9 @@ management:
   tracing:
     sampling:
       probability: 1.0
+
+clients:
+  game:
+    url: http://localhost:8081
+  accounts:
+    url: http://localhost:8082

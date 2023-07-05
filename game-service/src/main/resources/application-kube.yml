@@ -1,11 +1,11 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   application:
-    name: game-list-service
+    name: game-service
   datasource:
-    url: jdbc:postgresql://postgres-db:5432/gamelistdb
+    url: jdbc:postgresql://postgres:5432/game
     username: shaswata79
     password: password
     driver-class-name: org.postgresql.Driver
@@ -20,26 +20,10 @@ spring:
   zipkin:
     base-url: http://zipkin:9411
 
-
 eureka:
   client:
     service-url:
       defaultZone: http://discovery-server:8761/eureka
     fetch-registry: true
-    register-with-eureka: true
-
-management:
-  endpoint:
-    web:
-      exposure:
-        include: "*"
-  tracing:
-    sampling:
-      probability: 1.0
-
-
-clients:
-  game:
-    url: http://game-service:8081
-  accounts:
-    url: http://user-account-service:8082
+    register-with-eureka: false
+    enabled: false

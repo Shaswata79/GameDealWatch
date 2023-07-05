@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import shaswata.gamelistservice.dto.UserDto;
 
 
-@FeignClient("user-account-service")
+@FeignClient(
+        name = "accounts",
+        url = "${clients.accounts.url}"
+)
 public interface UserAccountServiceClient {
 
     @PostMapping (path = "/accounts/user/updateListID")

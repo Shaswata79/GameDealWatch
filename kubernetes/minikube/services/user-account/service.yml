@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-account-service
+spec:
+  selector:
+    app: user-account-service
+  ports:
+    - port: 80
+      targetPort: 8082
+  type: LoadBalancer

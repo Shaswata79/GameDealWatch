@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-account-service
+  labels:
+    app: user-account-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: user-account-service
+      labels:
+        app: user-account-service
+    spec:
+      containers:
+        - name: user-account-service
+          image: shaswata79/user-account-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: user-account-service

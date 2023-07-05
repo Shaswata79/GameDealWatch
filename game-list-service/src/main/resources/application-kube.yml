@@ -5,7 +5,7 @@ spring:
   application:
     name: game-list-service
   datasource:
-    url: jdbc:postgresql://postgres-db:5432/gamelistdb
+    url: jdbc:postgresql://postgres:5432/gamelist
     username: shaswata79
     password: password
     driver-class-name: org.postgresql.Driver
@@ -26,7 +26,8 @@ eureka:
     service-url:
       defaultZone: http://discovery-server:8761/eureka
     fetch-registry: true
-    register-with-eureka: true
+    register-with-eureka: false
+    enabled: false
 
 management:
   endpoint:
@@ -40,6 +41,6 @@ management:
 
 clients:
   game:
-    url: http://game-service:8081
+    url: http://game-service
   accounts:
-    url: http://user-account-service:8082
+    url: http://user-account-service

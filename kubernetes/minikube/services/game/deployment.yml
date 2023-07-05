@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: game-service
+  labels:
+    app: game-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: game-service
+      labels:
+        app: game-service
+    spec:
+      containers:
+        - name: game-service
+          image: shaswata79/game-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: game-service
