@@ -1,35 +1,35 @@
 services:
-#
-#  postgresql:
-#    container_name: postgres-db
-#    image: 'postgres:15.1-alpine'
-#    environment:
-#      POSTGRES_USER: shaswata79
-#      POSTGRES_PASSWORD: password
-#      PGDATA: /data/postgres
-#    volumes:
-#      - postgres:/data/postgres
-#    ports:
-#      - "5432:5432"
-#    networks:
-#      - postgres
-#    restart: unless-stopped
-#
-#  pgadmin:
-#    container_name: pgadmin
-#    image: dpage/pgadmin4
-#    environment:
-#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-#      PGADMIN_CONFIG_SERVER_MODE: 'False'
-#    volumes:
-#      - pgadmin:/var/lib/pgadmin
-#    ports:
-#      - "5050:80"
-#    networks:
-#      - postgres
-#    restart: unless-stopped
-#
+
+  postgres:
+    container_name: postgres-db
+    image: 'postgres:15.1-alpine'
+    environment:
+      POSTGRES_USER: shaswata79
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+
 #  zipkin:
 #    image: openzipkin/zipkin
 #    container_name: zipkin
@@ -49,103 +49,107 @@ services:
 
   keycloak:
     image: quay.io/keycloak/keycloak:23.0.3
+    container_name: keycloak
+    command: start-dev
     ports:
       - "8085:8080"
+    depends_on:
+      - postgres
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
-    command: ["start-dev"]
+      - KC_DB=postgres
+      - KC_DB_USERNAME=shaswata79
+      - KC_DB_PASSWORD=password
+      - KC_DB_SCHEMA=public
+      - KC_DB_URL=jdbc:postgresql://postgres-db:5432/keycloakdb
+    networks:
+      - postgres
 
 
-#  discovery-server:
-#    image: shaswata79/discovery-server:latest
-#    container_name: discovery-server
-#    ports:
-#      - "8761:8761"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#    depends_on:
-#      - zipkin
-#
-#  api-gateway:
-#    image: shaswata79/api-gateway:latest
-#    container_name: api-gateway
-#    ports:
-#      - "8090:8090"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#    depends_on:
-#      - zipkin
-#      - discovery-server
-#
-#  user-account-service:
-#    image: shaswata79/user-account-service:latest
-#    container_name: user-account-service
-#    ports:
-#      - "8082:8082"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#      - postgres
-#    depends_on:
-#      - zipkin
-#      - discovery-server
-#      - postgresql
-#      - rabbitmq
-#
-#  game-service:
-#    image: shaswata79/game-service:latest
-#    container_name: game-service
-#    ports:
-#      - "8081:8081"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#      - postgres
-#    depends_on:
-#      - zipkin
-#      - discovery-server
-#      - postgresql
-#      - rabbitmq
-#
-#  notification-service:
-#    image: shaswata79/notification-service:latest
-#    container_name: notification-service
-#    ports:
-#      - "8083:8083"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#      - postgres
-#    depends_on:
-#      - zipkin
-#      - discovery-server
-#      - postgresql
-#      - rabbitmq
-#
-#  game-list-service:
-#    image: shaswata79/game-list-service:latest
-#    container_name: game-list-service
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#      - postgres
-#    depends_on:
-#      - zipkin
-#      - discovery-server
-#      - postgresql
-#      - rabbitmq
-#
+  discovery-server:
+    image: shaswata79/discovery-server:latest
+    container_name: discovery-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+
+
+  api-gateway:
+    image: shaswata79/api-gateway:latest
+    container_name: api-gateway
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - discovery-server
+
+  user-account-service:
+    image: shaswata79/user-account-service:latest
+    container_name: user-account-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - discovery-server
+      - postgres
+      - rabbitmq
+
+  game-service:
+    image: shaswata79/game-service:latest
+    container_name: game-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - discovery-server
+      - postgres
+      - rabbitmq
+
+  notification-service:
+    image: shaswata79/notification-service:latest
+    container_name: notification-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - discovery-server
+      - postgres
+      - rabbitmq
+
+  game-list-service:
+    image: shaswata79/game-list-service:latest
+    container_name: game-list-service
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - discovery-server
+      - postgres
+      - rabbitmq
+
 networks:
   postgres:
     driver: bridge

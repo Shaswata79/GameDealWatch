@@ -27,7 +27,7 @@ public class SecurityConfig {
                                         .pathMatchers("/list/admin/**").hasRole("ADMIN")            // game-list-service
                                         .pathMatchers("/list/user/**").hasRole("USER")              // game-list-service
                                         .pathMatchers("/accounts/admin/**").hasRole("ADMIN")        // user-account-service
-                                        .pathMatchers("/accounts/user/create").permitAll()          // user-account-service
+                                        .pathMatchers("/accounts/user/create").authenticated()          // user-account-service
                                         .pathMatchers("/accounts/user/**").hasRole("USER")          // user-account-service
                 )
                 .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec

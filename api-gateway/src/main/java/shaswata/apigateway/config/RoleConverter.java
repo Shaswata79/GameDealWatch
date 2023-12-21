@@ -24,6 +24,10 @@ public class RoleConverter implements Converter<Jwt, Collection<GrantedAuthority
                 .stream().map(roleName -> "ROLE_" + roleName)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+        System.out.println("##########ROLES#####################");
+        for (GrantedAuthority role : roles){
+            System.out.println(role.toString());
+        }
         return roles;
     }
 

@@ -26,6 +26,11 @@ spring:
           uri: lb://notification-service/
           predicates:
             - Path=/notification/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://keycloak:8085/realms/gdw/protocol/openid-connect/certs"
   zipkin:
     base-url: http://zipkin:9411
 
