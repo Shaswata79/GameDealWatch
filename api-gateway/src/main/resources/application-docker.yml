@@ -30,7 +30,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: "http://keycloak:8085/realms/gdw/protocol/openid-connect/certs"
+          jwk-set-uri: "http://keycloak:8080/realms/gdw/protocol/openid-connect/certs"
   zipkin:
     base-url: http://zipkin:9411
 

@@ -27,8 +27,8 @@ public class UserService {
         if(dto.getName() == null || dto.getName() == ""){
             throw new Exception("Name cannot be empty!");
         }
-        if(dto.getEmail() == null || dto.getEmail() == "" || dto.getPassword() == null || dto.getPassword() == ""){
-            throw new Exception("Email or password cannot be empty!");
+        if(dto.getEmail() == null || dto.getEmail() == ""){
+            throw new Exception("Email or username cannot be empty!");
         }
 
         if(userRepo.findUserAccountByEmail(dto.getEmail()) != null){
@@ -38,7 +38,7 @@ public class UserService {
         UserAccount user = new UserAccount();
         user.setName(dto.getName());
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
+        user.setUsername(dto.getUsername());
         user.setListID(null);
 
         user = userRepo.save(user);
@@ -62,11 +62,7 @@ public class UserService {
         }
 
         UserAccount user = null;
-//        if(currentUser.getUsername().equals(email)){
-            user = userRepo.findUserAccountByEmail(email);
-//        } else{
-//            throw new Exception("You can only view your own account details!");
-//        }
+        user = userRepo.findUserAccountByEmail(email);
 
         if(user == null){
             throw new Exception("No user account exists with email " + email);
@@ -98,7 +94,7 @@ public class UserService {
         UserDto dto = new UserDto();
         dto.setEmail(user.getEmail());
         dto.setName(user.getName());
-        dto.setPassword(user.getPassword());
+        dto.setUsername(user.getUsername());
         dto.setId(user.getId());
         dto.setListID(user.getListID());
         return dto;

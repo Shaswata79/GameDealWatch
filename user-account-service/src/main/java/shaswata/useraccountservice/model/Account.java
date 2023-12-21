@@ -15,7 +15,7 @@ public abstract class Account {
 
     private String email;
 
-    private String password;
+    private String username;
 
     private String name;
 

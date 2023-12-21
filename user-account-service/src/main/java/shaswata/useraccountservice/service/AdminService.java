@@ -45,8 +45,8 @@ public class AdminService {
         if(dto.getName() == null || dto.getName() == ""){
             throw new Exception("Name cannot be empty!");
         }
-        if(dto.getEmail() == null || dto.getEmail() == "" || dto.getPassword() == null || dto.getPassword() == ""){
-            throw new Exception("Email or password cannot be empty!");
+        if(dto.getEmail() == null || dto.getEmail() == ""){
+            throw new Exception("Email or username cannot be empty!");
         }
 
         if(adminRepo.findAdminAccountByEmail(dto.getEmail()) != null){
@@ -56,7 +56,7 @@ public class AdminService {
         AdminAccount admin = new AdminAccount();
         admin.setName(dto.getName());
         admin.setEmail(dto.getEmail());
-        admin.setPassword(dto.getPassword());
+        admin.setUsername(dto.getUsername());
 
         adminRepo.save(admin);
         return AdminService.adminToDTO(admin);
@@ -68,7 +68,7 @@ public class AdminService {
         AdminDto dto = new AdminDto();
         dto.setEmail(user.getEmail());
         dto.setName(user.getName());
-        dto.setPassword(user.getPassword());
+        dto.setUsername(user.getUsername());
         dto.setId(user.getId());
         return dto;
     }

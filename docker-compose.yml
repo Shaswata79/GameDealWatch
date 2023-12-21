@@ -65,6 +65,7 @@ services:
       - KC_DB_URL=jdbc:postgresql://postgres-db:5432/keycloakdb
     networks:
       - postgres
+      - spring
 
 
   discovery-server:
