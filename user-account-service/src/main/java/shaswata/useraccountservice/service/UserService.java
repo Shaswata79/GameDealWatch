@@ -18,7 +18,7 @@ public class UserService {
 
     private final UserRepository userRepo;
 //    private final KafkaTemplate<String, Object> kafkaTemplate;
-    private final NotificationClient notificationClient;
+//    private final NotificationClient notificationClient;
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 

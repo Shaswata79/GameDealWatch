@@ -32,16 +32,16 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/user/{email}")
-    public ResponseEntity<?> viewUser(@PathVariable String email){
-        try{
-            UserDto dto = userAccountServiceClient.viewUser(email);
-            return new ResponseEntity<>(dto, HttpStatus.OK);
-
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @GetMapping("/user/{email}")
+//    public ResponseEntity<?> viewUser(@PathVariable String email){
+//        try{
+//            UserDto dto = userAccountServiceClient.viewUser(email);
+//            return new ResponseEntity<>(dto, HttpStatus.OK);
+//
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 
 }

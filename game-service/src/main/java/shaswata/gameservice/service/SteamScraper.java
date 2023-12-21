@@ -29,7 +29,7 @@ public class SteamScraper implements Scraper{
                 for (Element gameElement : gameElements) {
                     String name = gameElement.select(".title").text();
                     String dateReleased = gameElement.select(".search_released").text();
-                    String price = gameElement.select(".search_price").text();
+                    String price = gameElement.select(".discount_final_price").text();
                     String link = gameElement.attr("href");
 
                     ItemDto itemDto = new ItemDto();

@@ -1,4 +1,4 @@
-package shaswata.notificationservice;
+package shaswata.notificationservice.rabbitmq;
 
 
 import org.springframework.amqp.core.Binding;

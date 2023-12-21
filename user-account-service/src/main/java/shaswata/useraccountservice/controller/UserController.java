@@ -26,6 +26,12 @@ public class UserController {
 
     }
 
+    /**
+     * Endpoint accessed by game-list-service microservice (in createList service method)
+     * @param email
+     * @param listID
+     * @return
+     */
     @PostMapping("/updateListID")
     public ResponseEntity<?> updateListID(@RequestParam String email, @RequestParam String listID){
         try{

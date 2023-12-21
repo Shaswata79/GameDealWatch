@@ -17,8 +17,8 @@ public interface UserAccountServiceClient {
     @PostMapping (path = "/accounts/user/updateListID")
     UserDto updateUserListID(@RequestParam("email") String email, @RequestParam("listID") String listID);
 
-    @GetMapping("/accounts/user/get/{email}")
-    UserDto viewUser(@PathVariable("email") String email);
+//    @GetMapping("/accounts/user/get/{email}")
+//    UserDto viewUser(@PathVariable("email") String email);
 
 }
 

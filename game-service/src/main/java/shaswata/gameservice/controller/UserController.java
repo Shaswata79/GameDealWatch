@@ -38,6 +38,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Endpoint accessed by game-list-service microservice (in createList service method)
+     * @param ids
+     * @return
+     */
     @GetMapping("/getItems")
     public ResponseEntity<?> getStoreItems(@RequestParam List<String> ids) {
         try {
@@ -48,6 +53,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Endpoint accessed by game-list-service microservice (in addItemToList service method)
+     * @param id
+     * @return
+     */
     @GetMapping("/getItem")
     public ResponseEntity<?> getStoreItem(@RequestParam String id) {
         try {
