@@ -4,7 +4,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import shaswata.gameservice.dto.ItemDto;
-import shaswata.gameservice.dto.PriceDataDto;
+import shaswata.gameservice.dto.PriceDateDto;
+import shaswata.gameservice.dto.PriceDto;
 import shaswata.gameservice.model.Item;
 import shaswata.gameservice.model.PriceData;
 import shaswata.gameservice.model.Store;
@@ -65,17 +66,27 @@ public class UserGameService {
 
 
     @Transactional
-    public List<PriceDataDto> viewPriceHistory(Long itemId) throws Exception {
+    public List<PriceDateDto> viewPriceHistory(Long itemId) throws Exception {
         Item item = itemRepo.findItemById(itemId);
         if(item == null){
             throw new Exception("Item does not exist!");
         }
         List<PriceData> priceDataList = item.getPrices();
-        List<PriceDataDto> priceDataDtos = new ArrayList<>();
+        List<PriceDateDto> priceDateDtos = new ArrayList<>();
         for (PriceData priceData : priceDataList){
-            priceDataDtos.add(priceDataToDTO(priceData));
+            priceDateDtos.add(priceDataToDTO(priceData));
         }
-        return priceDataDtos;
+        return priceDateDtos;
+    }
+
+    @Transactional
+    public List<PriceDto> getLatestPrices(){
+        List<PriceDto> priceDtos = new ArrayList<>();
+        List<Item> allItems = itemRepo.findAll();
+        for(Item item : allItems){
+            priceDtos.add(new PriceDto(item.getId(), item.getGame(), item.getPrices().get(0).getPrice()));
+        }
+        return priceDtos;
     }
 
 
@@ -90,8 +101,8 @@ public class UserGameService {
     }
 
 
-    static PriceDataDto priceDataToDTO(PriceData priceData){
-        PriceDataDto dto = new PriceDataDto();
+    static PriceDateDto priceDataToDTO(PriceData priceData){
+        PriceDateDto dto = new PriceDateDto();
         dto.setDate(priceData.getDate());
         dto.setPrice(priceData.getPrice());
         return dto;

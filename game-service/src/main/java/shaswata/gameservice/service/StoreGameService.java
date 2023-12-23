@@ -77,8 +77,8 @@ public class StoreGameService {
 
 
 
-    @Scheduled(cron = "0 0 0 * * ?")    //executes daily at midnight
-    public void updateGameInfoDaily(String storeName) throws Exception {
+    @Scheduled(cron = "0 0 0 * * *")    //executes daily at midnight
+    public void updateGameInfoDaily() throws Exception {
         updateGameInfo("Steam");
         updateGameInfo("Blizzard");
         updateGameInfo("EA");

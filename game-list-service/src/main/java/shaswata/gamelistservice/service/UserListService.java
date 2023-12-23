@@ -3,17 +3,20 @@ package shaswata.gamelistservice.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import shaswata.amqp.RabbitMQMessageProducer;
 import shaswata.gamelistservice.dto.GameListDto;
 import shaswata.gamelistservice.dto.ItemDto;
+import shaswata.gamelistservice.dto.NotificationRequest;
+import shaswata.gamelistservice.dto.PriceDto;
 import shaswata.gamelistservice.model.GameList;
 import shaswata.gamelistservice.model.ListItem;
 import shaswata.gamelistservice.repository.GameListRepository;
 import shaswata.gamelistservice.repository.ListItemRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -24,22 +27,17 @@ public class UserListService extends ListService{
     private final GameListRepository gameListRepo;
     private final GameServiceClient gameServiceClient;
     private final UserAccountServiceClient userAccountServiceClient;
-
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
     @Transactional
-    public GameListDto createList(String email, List<String> itemIDs) throws Exception {
+    public GameListDto createList(String email) throws Exception {
         if(email == null || email == ""){
             throw new Exception("User email cannot be empty!");
         }
-        if(itemIDs.isEmpty()){
-            throw new Exception("Item list cannot be empty!");
-        }
 
         GameList gameList = new GameList();
-        List<ItemDto> items = gameServiceClient.getItems(itemIDs);
-        System.out.println(Arrays.toString(items.toArray()));
-        List<ListItem> itemList = setThresholds(items);
+        List<ListItem> itemList = new ArrayList<>();
         gameList.setItems(itemList);
         gameList.setUserEmail(email);
 
@@ -49,7 +47,7 @@ public class UserListService extends ListService{
     }
 
     @Transactional
-    public GameListDto addItemToList(String email, Long itemID) throws Exception{
+    public GameListDto addItemToList(String email, Long itemID, Double threshold) throws Exception{
         if(email == null || email == ""){
             throw new Exception("User email cannot be empty!");
         }
@@ -69,9 +67,8 @@ public class UserListService extends ListService{
         }
         ListItem listItem = new ListItem();
         listItem.setItemID(itemDto.getId());
-        listItem.setThreshold(itemDto.getCurrentPrice() * 0.75);
+        listItem.setThreshold(threshold);
         listItemRepo.save(listItem);
-
 
         gameList.getItems().add(listItem);
         gameListRepo.save(gameList);
@@ -125,21 +122,47 @@ public class UserListService extends ListService{
         return "List deleted successfully";
     }
 
-
-    @Transactional
-    private List<ListItem> setThresholds(List<ItemDto> items){
-        List<ListItem> listItems = new ArrayList<>();
-        for(ItemDto item : items){
-            Double price = item.getCurrentPrice();
-            double threshold = price * 0.75;
-            ListItem listItem = new ListItem();
-            listItem.setThreshold(threshold);
-            listItem.setItemID(item.getId());
-            listItemRepo.save(listItem);
-            listItems.add(listItem);
-        }
-        return listItems;
+    @Scheduled(cron = "0 0 1 * * *")    //executes daily at 1 am
+    public void sendPriceAlertDaily() throws Exception {
+        sendPriceAlert();
     }
 
+    @Transactional
+    public void sendPriceAlert() throws Exception {
+        // first get the latest prices
+        List<PriceDto> priceDtoList = gameServiceClient.getLatestPrices();
+        HashMap<Long, Double> latestPrices = new HashMap<>();
+        HashMap<Long, String> games = new HashMap<>();
+        for(PriceDto priceDto : priceDtoList){
+            latestPrices.put(priceDto.getId(), priceDto.getCurrentPrice());
+            games.put(priceDto.getId(), priceDto.getGame());
+        }
+
+        // then check for prices below threshold
+        String game;
+        String userEmail;
+        List<GameList> gameLists = gameListRepo.findAll();
+        for(GameList gameList : gameLists){                 // for every game list
+            for(ListItem item : gameList.getItems()){       // for every game in game list
+                Double latestPrice = latestPrices.get(item.getItemID());
+                if(latestPrice < item.getThreshold()){   // compare the latest price with threshold
+                    game = games.get(item.getItemID());
+                    userEmail = gameList.getUserEmail();
+                    System.out.println("PRICE ALERT: " + game + " is only $" + latestPrice + ", buy it now!");
+                    sendPriceAlertEmail(game, userEmail, latestPrice);
+                }
+            }
+        }
+    }
+
+    private void sendPriceAlertEmail(String game, String email, Double currentPrice){
+        String message = game + " is only $" + currentPrice + ", buy it now!";
+
+        // RabbitMQ
+        NotificationRequest notificationRequest = new NotificationRequest(email, message);
+        rabbitMQMessageProducer.publish(notificationRequest,
+                "internal.exchange",
+                "internal.notification.routing-key");
+    }
 
 }

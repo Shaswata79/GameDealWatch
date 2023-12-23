@@ -19,17 +19,20 @@ public class SteamScraper implements Scraper{
         List<ItemDto> items = new ArrayList<>();
 
         try {
-            for(int i = 1; i < 2; i++){    //each page contains 25 items
+            for(int i = 1; i < 10; i++){    //each page contains 25 items
                 String page = Integer.toString(i);
                 String url = "https://store.steampowered.com/search/?category1=998&os=win&supportedlang=english&page=" + page + "&ndl=1";
                 Document document = Jsoup.connect(url).get();
                 Elements gameElements = document.select(".search_result_row");
-                System.out.println(gameElements.size());
+                System.out.println("Games found: " + gameElements.size());
 
                 for (Element gameElement : gameElements) {
                     String name = gameElement.select(".title").text();
                     String dateReleased = gameElement.select(".search_released").text();
                     String price = gameElement.select(".discount_final_price").text();
+                    if(price == ""){
+                        continue;
+                    }
                     String link = gameElement.attr("href");
 
                     ItemDto itemDto = new ItemDto();
@@ -51,7 +54,7 @@ public class SteamScraper implements Scraper{
 
     private Double extractPrice(String strPrice){
         Double price = null;
-        if(strPrice.equals("Free To Play") || strPrice.equals("Free to Play")){
+        if(strPrice.contains("Free")){
             price = 0.0;
         }else {
             int dollarSign = strPrice.indexOf('$');

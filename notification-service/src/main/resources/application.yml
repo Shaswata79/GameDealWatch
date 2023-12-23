@@ -21,6 +21,17 @@ spring:
     base-url: http://localhost:9411
   rabbitmq:
     addresses: localhost:5672
+  mail:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    host: smtp.gmail.com
+    port: 587
+    username: gamesdealwatch@gmail.com
+    password: mxninmiozyvdovjm
 
 eureka:
   client:

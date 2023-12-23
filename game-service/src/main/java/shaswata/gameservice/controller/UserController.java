@@ -6,7 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shaswata.gameservice.dto.ItemDto;
-import shaswata.gameservice.dto.PriceDataDto;
+import shaswata.gameservice.dto.PriceDateDto;
+import shaswata.gameservice.dto.PriceDto;
 import shaswata.gameservice.service.UserGameService;
 
 import java.util.List;
@@ -68,12 +69,26 @@ public class UserController {
         }
     }
 
+    /**
+     * Endpoint accessed by game-list-service microservice (in updatePrices service method)
+     * @return
+     */
+    @GetMapping("/latestPrices")
+    public ResponseEntity<?> getLatestPrices() {
+        try {
+            List<PriceDto> priceDtos = userGameService.getLatestPrices();
+            return new ResponseEntity<>(priceDtos, HttpStatus.OK);
+        } catch (Exception e ){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @GetMapping("/{id}/history")
     public ResponseEntity<?> viewPriceHistory(@PathVariable Long id) {
         try {
-            List<PriceDataDto> priceDataDto = userGameService.viewPriceHistory(id);
-            return new ResponseEntity<>(priceDataDto, HttpStatus.OK);
+            List<PriceDateDto> priceDateDto = userGameService.viewPriceHistory(id);
+            return new ResponseEntity<>(priceDateDto, HttpStatus.OK);
         } catch (Exception e ){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

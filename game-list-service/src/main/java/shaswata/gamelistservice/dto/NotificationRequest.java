@@ -1,4 +1,4 @@
-package shaswata.useraccountservice.dto;
+package shaswata.gamelistservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

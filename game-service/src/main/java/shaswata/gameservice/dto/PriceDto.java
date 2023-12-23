@@ -1,4 +1,4 @@
-package shaswata.useraccountservice.dto;
+package shaswata.gameservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotificationRequest {
-    private String customerEmail;
-    private String message;
+public class PriceDto {
+
+    private Long id;
+    private String game;
+    private Double currentPrice;
+
 }

@@ -18,9 +18,9 @@ public class UserController {
     private final UserListService userListService;
 
     @PostMapping("/createList")
-    public ResponseEntity<?> createList(@RequestParam String email, @RequestParam List<String> ids){
+    public ResponseEntity<?> createList(@RequestParam String email){
         try{
-            GameListDto listDto = userListService.createList(email, ids);
+            GameListDto listDto = userListService.createList(email);
             return new ResponseEntity<>(listDto, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -29,9 +29,9 @@ public class UserController {
     }
 
     @PutMapping("/add")
-    public ResponseEntity<?> addToList(@RequestParam String email, @RequestParam Long id){
+    public ResponseEntity<?> addToList(@RequestParam String email, @RequestParam Long id, @RequestParam Double threshold){
         try{
-            GameListDto listDto = userListService.addItemToList(email, id);
+            GameListDto listDto = userListService.addItemToList(email, id, threshold);
             return new ResponseEntity<>(listDto, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -72,16 +72,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("/updatePrices")
+    public ResponseEntity<?> updatePrices(){
+        try{
+            userListService.sendPriceAlert();
+            return new ResponseEntity<>("Price alert emails sent!", HttpStatus.OK);
 
-//    @GetMapping("/getItems")
-//    public ResponseEntity<?> viewStoreItems(@RequestParam List<String> ids) {
-//        try {
-//            List<ItemDto> itemDtoList = userListService.getItems(ids);
-//            return new ResponseEntity<>(itemDtoList, HttpStatus.OK);
-//        } catch (Exception e ){
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
-//    }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 
 }

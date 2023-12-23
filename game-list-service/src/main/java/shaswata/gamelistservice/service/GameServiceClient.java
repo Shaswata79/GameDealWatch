@@ -4,6 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import shaswata.gamelistservice.dto.ItemDto;
+import shaswata.gamelistservice.dto.PriceDto;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public interface GameServiceClient {
 
     @GetMapping("/game/user/getItem")
     ItemDto getItem(@RequestParam String id);
+
+    @GetMapping("/game/user/latestPrices")
+    List<PriceDto> getLatestPrices();
 
 }
 

@@ -43,12 +43,12 @@ public class UserService {
 
         user = userRepo.save(user);
         // RabbitMQ
-        NotificationRequest notificationRequest = new NotificationRequest(user.getId(), user.getEmail(), "Your account has been created!");
+        NotificationRequest notificationRequest = new NotificationRequest(user.getEmail(), "Your account has been created!");
         rabbitMQMessageProducer.publish(notificationRequest,
                 "internal.exchange",
                 "internal.notification.routing-key");
 //        Kafka
-//        NotificationRequest notificationRequest = new NotificationRequest(user.getId(), user.getEmail(), "Your account has been created!");
+//        NotificationRequest notificationRequest = new NotificationRequest(user.getEmail(), "Your account has been created!");
 //        kafkaTemplate.send("gdwTopic", notificationRequest);
         return UserService.userToDTO(user);
 

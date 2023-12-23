@@ -37,7 +37,7 @@ services:
 #      - "9411:9411"
 #    networks:
 #      - spring
-
+#
   rabbitmq:
     image: rabbitmq:3.9.11-management-alpine
     container_name: rabbitmq
@@ -66,90 +66,90 @@ services:
     networks:
       - postgres
       - spring
-
-
-  discovery-server:
-    image: shaswata79/discovery-server:latest
-    container_name: discovery-server
-    ports:
-      - "8761:8761"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-
-
-  api-gateway:
-    image: shaswata79/api-gateway:latest
-    container_name: api-gateway
-    ports:
-      - "8090:8090"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - discovery-server
-
-  user-account-service:
-    image: shaswata79/user-account-service:latest
-    container_name: user-account-service
-    ports:
-      - "8082:8082"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-      - postgres
-    depends_on:
-      - discovery-server
-      - postgres
-      - rabbitmq
-
-  game-service:
-    image: shaswata79/game-service:latest
-    container_name: game-service
-    ports:
-      - "8081:8081"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-      - postgres
-    depends_on:
-      - discovery-server
-      - postgres
-      - rabbitmq
-
-  notification-service:
-    image: shaswata79/notification-service:latest
-    container_name: notification-service
-    ports:
-      - "8083:8083"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-      - postgres
-    depends_on:
-      - discovery-server
-      - postgres
-      - rabbitmq
-
-  game-list-service:
-    image: shaswata79/game-list-service:latest
-    container_name: game-list-service
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-      - postgres
-    depends_on:
-      - discovery-server
-      - postgres
-      - rabbitmq
+#
+#
+#  discovery-server:
+#    image: shaswata79/discovery-server:latest
+#    container_name: discovery-server
+#    ports:
+#      - "8761:8761"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#
+#
+#  api-gateway:
+#    image: shaswata79/api-gateway:latest
+#    container_name: api-gateway
+#    ports:
+#      - "8090:8090"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#    depends_on:
+#      - discovery-server
+#
+#  user-account-service:
+#    image: shaswata79/user-account-service:latest
+#    container_name: user-account-service
+#    ports:
+#      - "8082:8082"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#      - postgres
+#    depends_on:
+#      - discovery-server
+#      - postgres
+#      - rabbitmq
+#
+#  game-service:
+#    image: shaswata79/game-service:latest
+#    container_name: game-service
+#    ports:
+#      - "8081:8081"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#      - postgres
+#    depends_on:
+#      - discovery-server
+#      - postgres
+#      - rabbitmq
+#
+#  notification-service:
+#    image: shaswata79/notification-service:latest
+#    container_name: notification-service
+#    ports:
+#      - "8083:8083"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#      - postgres
+#    depends_on:
+#      - discovery-server
+#      - postgres
+#      - rabbitmq
+#
+#  game-list-service:
+#    image: shaswata79/game-list-service:latest
+#    container_name: game-list-service
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#      - postgres
+#    depends_on:
+#      - discovery-server
+#      - postgres
+#      - rabbitmq
 
 networks:
   postgres:

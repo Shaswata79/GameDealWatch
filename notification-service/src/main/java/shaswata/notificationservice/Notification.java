@@ -21,7 +21,6 @@ public class Notification {
     @GeneratedValue
     private Long id;
 
-    private Long customerId;
     private String customerEmail;
     private String sender;
     private String message;
