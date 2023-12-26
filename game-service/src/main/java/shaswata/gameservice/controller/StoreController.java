@@ -19,6 +19,11 @@ public class StoreController {
 
     private final StoreGameService storeGameService;
 
+    /**
+     * Update the database of games from a specific store (Steam, Blizzard, EA)
+     * @param storeName
+     * @return
+     */
     @PutMapping("/update")
     public ResponseEntity<?> updateStoreItems(@RequestParam String storeName) {
         try {

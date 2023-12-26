@@ -40,6 +40,8 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
 
+# Using RabbitMQ Topic Exchange: Topic exchanges route messages to queues based on wildcard matches between the routing key and the routing pattern, which is specified by the queue binding.
+# The following information must be specified by message producer (user-account-service/game-list-service) before publishing
 rabbitmq:
   exchanges:
     internal: internal.exchange
@@ -47,3 +49,6 @@ rabbitmq:
     notification: notification.queue
   routing-keys:
     internal-notification: internal.notification.routing-key
+
+# The consumer (notification-service) indicates which topic it is interested in (internal.exchange). The consumer creates a queue (notification.queue) and sets up a binding (a binding ties together an exchange to a queue because you can have multiple queues for an exchange) with a given routing pattern (routing-key).
+# All messages with a routing key that match the routing pattern are routed to the queue and stay there until the consumer consumes the message.

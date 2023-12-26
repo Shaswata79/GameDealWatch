@@ -10,7 +10,9 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-
+/**
+ * Class to store a game's price on a certain date
+ */
 @Entity
 @Getter
 @Setter

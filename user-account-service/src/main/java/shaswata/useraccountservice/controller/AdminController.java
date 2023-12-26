@@ -17,7 +17,11 @@ public class AdminController {
 
     private final AdminService adminService;
 
-
+    /**
+     * Create an admin account after creating an account on authorisation server
+     * @param adminDto
+     * @return
+     */
     @PostMapping("/create")
     public ResponseEntity<?> createAdmin(@RequestBody AdminDto adminDto){
         try{
@@ -31,6 +35,10 @@ public class AdminController {
 
     }
 
+    /**
+     * View all registered user accounts as admin
+     * @return
+     */
     @GetMapping("/viewAllUsers")
     public ResponseEntity<?> viewAllUsers(){
         try{

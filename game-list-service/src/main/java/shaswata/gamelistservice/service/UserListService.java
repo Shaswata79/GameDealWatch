@@ -30,6 +30,13 @@ public class UserListService extends ListService{
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
+    /**
+     * Create an empty game list for user
+     * Update user's list ID by calling user-account-service
+     * @param email
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public GameListDto createList(String email) throws Exception {
         if(email == null || email == ""){
@@ -46,6 +53,15 @@ public class UserListService extends ListService{
         return gameListToDTO(gameList);
     }
 
+    /**
+     * Add a game to the existing list
+     * Fetch game delails by calling game-service
+     * @param email
+     * @param itemID
+     * @param threshold
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public GameListDto addItemToList(String email, Long itemID, Double threshold) throws Exception{
         if(email == null || email == ""){
@@ -75,7 +91,13 @@ public class UserListService extends ListService{
         return gameListToDTO(gameList);
     }
 
-
+    /**
+     * Remove a game from list
+     * @param email
+     * @param itemID
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public GameListDto removeItemFromList(String email, Long itemID) throws Exception{
         if(email == null || email == ""){
@@ -99,7 +121,12 @@ public class UserListService extends ListService{
         return gameListToDTO(gameList);
     }
 
-
+    /**
+     * View game list of current logged-in user
+     * @param email
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public GameListDto viewOwnList(String email) throws Exception {
         if(email == null || email == ""){
@@ -113,6 +140,12 @@ public class UserListService extends ListService{
         return gameListToDTO(gameList);
     }
 
+    /**
+     * Delete a user's game list
+     * @param email
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public String deleteList(String email) throws Exception{
         if(email == null || email == ""){
@@ -122,11 +155,20 @@ public class UserListService extends ListService{
         return "List deleted successfully";
     }
 
-    @Scheduled(cron = "0 0 1 * * *")    //executes daily at 1 am
+    /**
+     * Call the sendPriceAlert() function daily at 1 am (since game prices are updated at midnight by game-service)
+     * @throws Exception
+     */
+    @Scheduled(cron = "0 0 1 * * *")
     public void sendPriceAlertDaily() throws Exception {
         sendPriceAlert();
     }
 
+    /**
+     * Check current prices of all games
+     * For all the game lists in the system, send email alerts to users for game prices which are below threshold
+     * @throws Exception
+     */
     @Transactional
     public void sendPriceAlert() throws Exception {
         // first get the latest prices

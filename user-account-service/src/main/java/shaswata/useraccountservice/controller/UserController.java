@@ -14,6 +14,11 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * Create a user account after creating an account on authorisation server
+     * @param userDto
+     * @return
+     */
     @PostMapping("/create")
     public ResponseEntity<?> createUser(@RequestBody UserDto userDto){
         try{
@@ -27,7 +32,8 @@ public class UserController {
     }
 
     /**
-     * Endpoint accessed by game-list-service microservice (in createList service method)
+     * Update user's game list ID after a list is created in game-list-service
+     * Endpoint accessed by game-list-service only (in createList service method)
      * @param email
      * @param listID
      * @return
@@ -43,7 +49,11 @@ public class UserController {
         }
     }
 
-
+    /**
+     * View current logged-in user's account
+     * @param email
+     * @return
+     */
     @GetMapping("/get/{email}")
     public ResponseEntity<?> viewUser(@PathVariable String email){
         try{

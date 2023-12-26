@@ -30,6 +30,7 @@ public class GameListServiceApplication {
 	/**
 	 * @LoadBalanced annotation takes care of decision-making about which instance (of a service) to send the request to. If
 	 * not included, this will cause an error since the restTemplate will be confused about which instance the request should be sent.
+	 * Not used when using FeignClients
 	 * @return
 	 */
 	@Bean

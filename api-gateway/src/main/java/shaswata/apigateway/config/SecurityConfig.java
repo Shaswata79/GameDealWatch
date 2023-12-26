@@ -18,6 +18,12 @@ import reactor.core.publisher.Mono;
 @EnableWebFluxSecurity  //Spring Cloud Gateway is built on Spring Boot 2.x, Spring WebFlux so need to use @EnableWebFluxSecurity instead of @EnableWebSecurity
 public class SecurityConfig {
 
+    /**
+     * Bean responsible for filtering requests to endpoints based on roles
+     * Uses custom role converter to get the correct roles associated to a request's JWT
+     * @param serverHttpSecurity
+     * @return
+     */
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity serverHttpSecurity){
         serverHttpSecurity.authorizeExchange(exchanges ->
@@ -27,11 +33,12 @@ public class SecurityConfig {
                                         .pathMatchers("/list/admin/**").hasRole("ADMIN")            // game-list-service
                                         .pathMatchers("/list/user/**").hasRole("USER")              // game-list-service
                                         .pathMatchers("/accounts/admin/**").hasRole("ADMIN")        // user-account-service
-                                        .pathMatchers("/accounts/user/create").authenticated()          // user-account-service
+                                        .pathMatchers("/accounts/user/create").authenticated()      // user-account-service
                                         .pathMatchers("/accounts/user/**").hasRole("USER")          // user-account-service
                 )
                 .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec
                         .jwt(jwtSpec -> jwtSpec.jwtAuthenticationConverter(extractGrantedAuthorities())));      // use custom role converter
+
         serverHttpSecurity.csrf(csrfSpec -> csrfSpec.disable());
         return serverHttpSecurity.build();
     }

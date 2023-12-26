@@ -14,6 +14,11 @@ import java.util.stream.Collectors;
 
 public class RoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
 
+    /**
+     * Extracts the roles from JWT and converts to correct format (ROLE_ADMIN, ROLE_USER)
+     * @param source
+     * @return
+     */
     @Override
     public Collection<GrantedAuthority> convert(Jwt source) {
         Map<String, Object> realmAccess = (Map<String, Object>) source.getClaims().get("realm_access");
@@ -24,10 +29,6 @@ public class RoleConverter implements Converter<Jwt, Collection<GrantedAuthority
                 .stream().map(roleName -> "ROLE_" + roleName)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-        System.out.println("##########ROLES#####################");
-        for (GrantedAuthority role : roles){
-            System.out.println(role.toString());
-        }
         return roles;
     }
 

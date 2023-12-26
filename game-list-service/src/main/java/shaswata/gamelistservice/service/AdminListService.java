@@ -14,6 +14,12 @@ public class AdminListService extends ListService{
 
     private final GameListRepository gameListRepo;
 
+    /**
+     * View a user's game list by email
+     * @param email
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public GameListDto getGameListByUser(String email) throws Exception {
         if(email == null || email == ""){

@@ -19,6 +19,11 @@ public class UserController {
 
     private final UserGameService userGameService;
 
+    /**
+     * View items/games of a specific store (Steam, Blizzard, EA)
+     * @param storeName
+     * @return
+     */
     @GetMapping("/viewItems")
     public ResponseEntity<?> viewStoreItems(@RequestParam String storeName) {
         try {
@@ -29,6 +34,11 @@ public class UserController {
         }
     }
 
+    /**
+     * View a game by ID
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> viewItem(@PathVariable Long id) {
         try {
@@ -40,7 +50,8 @@ public class UserController {
     }
 
     /**
-     * Endpoint accessed by game-list-service microservice (in createList service method)
+     * Get all the games by a list of IDs
+     * Endpoint accessed by game-list-service only (in createList service method)
      * @param ids
      * @return
      */
@@ -55,7 +66,8 @@ public class UserController {
     }
 
     /**
-     * Endpoint accessed by game-list-service microservice (in addItemToList service method)
+     * Get a game by ID
+     * Endpoint accessed by game-list-service (in addItemToList service method)
      * @param id
      * @return
      */
@@ -70,7 +82,8 @@ public class UserController {
     }
 
     /**
-     * Endpoint accessed by game-list-service microservice (in updatePrices service method)
+     * Get the current price of all games
+     * Endpoint accessed by game-list-service only (in updatePrices service method)
      * @return
      */
     @GetMapping("/latestPrices")
@@ -83,7 +96,11 @@ public class UserController {
         }
     }
 
-
+    /**
+     * View the price history of a specific game
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}/history")
     public ResponseEntity<?> viewPriceHistory(@PathVariable Long id) {
         try {

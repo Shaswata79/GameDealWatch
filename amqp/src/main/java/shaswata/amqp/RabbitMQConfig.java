@@ -16,6 +16,11 @@ public class RabbitMQConfig {
 
     private final ConnectionFactory connectionFactory;
 
+    /**
+     * Template allow us to send messages to the message queue
+     * When a producer sends a message, the template also ensures it is sent as a JSON
+     * @return
+     */
     @Bean
     public AmqpTemplate amqpTemplate() {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
@@ -23,6 +28,10 @@ public class RabbitMQConfig {
         return rabbitTemplate;
     }
 
+    /**
+     * Listener allows applications to consume messages from the message queue
+     * @return
+     */
     @Bean
     public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory() {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
@@ -31,6 +40,10 @@ public class RabbitMQConfig {
         return factory;
     }
 
+    /**
+     * JSON message converter bean
+     * @return
+     */
     @Bean
     public MessageConverter jacksonConverter() {
         MessageConverter jackson2JsonMessageConverter = new Jackson2JsonMessageConverter();

@@ -13,6 +13,11 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
+    /**
+     * Manually send a notification (when not using rabbitmq/kafka)
+     * For testing purposes only
+     * @param notificationRequest
+     */
     @PostMapping("/send")
     public void sendNotification(@RequestBody NotificationRequest notificationRequest) {
         try{

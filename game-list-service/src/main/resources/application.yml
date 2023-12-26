@@ -39,6 +39,7 @@ management:
     sampling:
       probability: 1.0
 
+# Needed for using FeignClients
 clients:
   game:
     url: http://localhost:8081

@@ -25,6 +25,12 @@ public class StoreGameService {
     private final SteamScraper steamScraper;
 
 
+    /**
+     * Calls the web scraper for each store and updates database
+     * @param storeName
+     * @return
+     * @throws Exception
+     */
     public List<ItemDto> updateGameInfo(String storeName) throws Exception {
         switch (Store.valueOf(storeName)) {
             case Steam:
@@ -43,7 +49,12 @@ public class StoreGameService {
 
     }
 
-
+    /**
+     * Updates the game database after new data is scraped from a store's website
+     * @param itemDtoList
+     * @param store
+     * @throws Exception
+     */
     @Transactional
     private void updateItemDB(List<ItemDto> itemDtoList, Store store) throws Exception {
         try{
@@ -76,8 +87,12 @@ public class StoreGameService {
     }
 
 
-
-    @Scheduled(cron = "0 0 0 * * *")    //executes daily at midnight
+    /**
+     * Updates the game database for each store
+     * Executes daily at midnight
+     * @throws Exception
+     */
+    @Scheduled(cron = "0 0 0 * * *")
     public void updateGameInfoDaily() throws Exception {
         updateGameInfo("Steam");
         updateGameInfo("Blizzard");

@@ -21,6 +21,10 @@ public class AdminService {
     private final AdminRepository adminRepo;
 
 
+    /**
+     * Get all users registered in the system
+     * @return
+     */
     @Transactional
     public List<UserDto> getAllUsers(){
         List<UserAccount> users = userRepo.findAll();
@@ -32,6 +36,11 @@ public class AdminService {
     }
 
 
+    /**
+     * Get single user by email
+     * @param email
+     * @return
+     */
     @Transactional
     public UserDto getUser(String email){
         UserAccount user = userRepo.findUserAccountByEmail(email);
@@ -39,7 +48,12 @@ public class AdminService {
     }
 
 
-
+    /**
+     * Create an admin account
+     * @param dto
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public AdminDto createAdmin(AdminDto dto) throws Exception {
         if(dto.getName() == null || dto.getName() == ""){

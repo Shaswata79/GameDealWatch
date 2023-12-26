@@ -21,6 +21,11 @@ public class UserGameService {
 
     private final ItemRepository itemRepo;
 
+    /**
+     * View all the games of a specific store
+     * @param storeName
+     * @return
+     */
     @Transactional
     public List<ItemDto> viewStoreItems(String storeName){
         List<Item> items = itemRepo.findItemsByStore(Store.valueOf(storeName));
@@ -30,6 +35,12 @@ public class UserGameService {
         return itemDtoList;
     }
 
+    /**
+     * View a specific game's detail
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public ItemDto viewItem(Long id) throws Exception {
         Item item = itemRepo.findItemById(id);
@@ -39,6 +50,12 @@ public class UserGameService {
         return itemToDTO(item);
     }
 
+    /**
+     * Gets all the games' details by the given list of ids
+     * @param ids
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public List<ItemDto> getItemsByID(List<String> ids) throws Exception {
         List<ItemDto> itemDtoList = new ArrayList<>();
@@ -53,6 +70,12 @@ public class UserGameService {
         return itemDtoList;
     }
 
+    /**
+     * Gets the game's details by the given id
+     * @param strId
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public ItemDto getItemByID(String strId) throws Exception {
         Long id = Long.valueOf(strId);
@@ -64,7 +87,12 @@ public class UserGameService {
         return itemDto;
     }
 
-
+    /**
+     * View list of past prices of a specific game
+     * @param itemId
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public List<PriceDateDto> viewPriceHistory(Long itemId) throws Exception {
         Item item = itemRepo.findItemById(itemId);
@@ -79,6 +107,10 @@ public class UserGameService {
         return priceDateDtos;
     }
 
+    /**
+     * Get all the games' current prices
+     * @return
+     */
     @Transactional
     public List<PriceDto> getLatestPrices(){
         List<PriceDto> priceDtos = new ArrayList<>();

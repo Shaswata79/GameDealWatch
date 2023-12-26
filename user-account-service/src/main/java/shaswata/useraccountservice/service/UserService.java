@@ -22,6 +22,12 @@ public class UserService {
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
+    /**
+     * Create a user account
+     * @param dto
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public UserDto createUser(UserDto dto) throws Exception {
         if(dto.getName() == null || dto.getName() == ""){
@@ -55,6 +61,12 @@ public class UserService {
     }
 
 
+    /**
+     * Get a user account by email
+     * @param email
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public UserDto getUser(String email) throws Exception {
         if(email == null || email == ""){
@@ -72,7 +84,13 @@ public class UserService {
     }
 
 
-
+    /**
+     * Update a user's game list ID
+     * @param email
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public UserDto updateList(String email, Long id) throws Exception {
         UserAccount user = userRepo.findUserAccountByEmail(email);

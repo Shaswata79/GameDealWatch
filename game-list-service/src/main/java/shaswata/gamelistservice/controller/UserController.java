@@ -17,6 +17,11 @@ public class UserController {
 
     private final UserListService userListService;
 
+    /**
+     * Create an empty game list for user
+     * @param email
+     * @return
+     */
     @PostMapping("/createList")
     public ResponseEntity<?> createList(@RequestParam String email){
         try{
@@ -28,6 +33,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Add a game to the existing list
+     * @param email
+     * @param id
+     * @param threshold
+     * @return
+     */
     @PutMapping("/add")
     public ResponseEntity<?> addToList(@RequestParam String email, @RequestParam Long id, @RequestParam Double threshold){
         try{
@@ -39,6 +51,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Remove a game from list
+     * @param email
+     * @param id
+     * @return
+     */
     @PutMapping("/remove")
     public ResponseEntity<?> removeFromList(@RequestParam String email, @RequestParam Long id){
         try{
@@ -50,6 +68,11 @@ public class UserController {
         }
     }
 
+    /**
+     * View game list of current logged-in user
+     * @param email
+     * @return
+     */
     @GetMapping("/userList/{email}")
     public ResponseEntity<?> viewUser(@PathVariable String email){
         try{
@@ -61,6 +84,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Delete a user's game list
+     * @param email
+     * @return
+     */
     @DeleteMapping("/delete/{email}")
     public ResponseEntity<?> deleteList(@PathVariable String email){
         try{
@@ -72,6 +100,10 @@ public class UserController {
         }
     }
 
+    /**
+     * Endpoint to update prices manually (Only used for testing)
+     * @return
+     */
     @GetMapping("/updatePrices")
     public ResponseEntity<?> updatePrices(){
         try{

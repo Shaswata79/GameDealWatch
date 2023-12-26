@@ -23,6 +23,10 @@ public class MailService {
     @Value("${spring.mail.port}")
     private Integer port;
 
+    /**
+     * Custom JavaMailSender bean used for sending email notifications
+     * @return
+     */
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

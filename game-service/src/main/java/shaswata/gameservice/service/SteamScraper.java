@@ -15,6 +15,11 @@ import java.util.List;
 @Service
 public class SteamScraper implements Scraper{
 
+    /**
+     * Scrapes all the available games from Steam's website
+     * Extracts each game's name, url, release date and current price
+     * @return
+     */
     public List<ItemDto> scrape() {
         List<ItemDto> items = new ArrayList<>();
 

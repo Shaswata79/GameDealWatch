@@ -15,6 +15,12 @@ public class NotificationConsumer {
 
     private final NotificationService notificationService;
 
+    /**
+     * Method that subscribes/listens to a message queue
+     * Uses the message received to perform action
+     * @param notificationRequest
+     * @throws Exception
+     */
     @RabbitListener(queues = "${rabbitmq.queues.notification}")
     public void consumer(NotificationRequest notificationRequest) throws Exception {
         log.info("Consumed {} from queue", notificationRequest);

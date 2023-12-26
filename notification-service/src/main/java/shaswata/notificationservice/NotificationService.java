@@ -21,6 +21,11 @@ public class NotificationService {
     @Value("${spring.mail.username}")
     private String systemEmail;
 
+    /**
+     * Called by notification consumer for sending notifications as email
+     * @param notificationRequest
+     * @throws Exception
+     */
     @Transactional
     @Async
     public void send(NotificationRequest notificationRequest) throws Exception {
@@ -38,7 +43,11 @@ public class NotificationService {
         sendEmail(notificationRequest.getCustomerEmail(), notificationRequest.getMessage());
     }
 
-
+    /**
+     * Sends email
+     * @param recipientEmail
+     * @param message
+     */
     private void sendEmail(String recipientEmail, String message) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(systemEmail);

@@ -30,6 +30,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
+          # Used to download a public certificate from auth server (Keycloak) to validate an access token
           jwk-set-uri: "http://localhost:8085/realms/gdw/protocol/openid-connect/certs"
   zipkin:
     base-url: http://localhost:9411
