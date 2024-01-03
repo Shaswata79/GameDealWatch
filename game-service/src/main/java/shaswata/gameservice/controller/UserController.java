@@ -12,6 +12,7 @@ import shaswata.gameservice.service.UserGameService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/game/user")

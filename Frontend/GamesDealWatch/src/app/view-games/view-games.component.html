@@ -1,0 +1,23 @@
+<table class="table">
+
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Game</th>
+      <th>URL</th>
+      <th>Store</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let tempGame of games">
+      <td>{{tempGame.id}}</td>
+      <td>{{tempGame.game}}</td>
+      <td>{{tempGame.url}}</td>
+      <td>{{tempGame.storeName}}</td>
+      <td>{{tempGame.currentPrice | currency:'USD' }}</td>
+    </tr>
+  </tbody>
+</table>
+

@@ -1,0 +1,61 @@
+<mat-toolbar>
+  <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  </button>
+
+  <h1>GameDealWatch</h1>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+
+    <button mat-button class="menu-button" routerLink="/signup">
+      <mat-icon>info</mat-icon>
+      <span routerLinkActive="active-link">Sign Up</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button class="menu-button" routerLink="/login">
+      <mat-icon>info</mat-icon>
+      <span routerLinkActive="active-link">Log In</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button class="menu-button" routerLink="/games">
+      <mat-icon>home</mat-icon>
+      <span routerLinkActive="active-link">Browse Games</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button class="menu-button" routerLink="/createGameList">
+      <mat-icon>person</mat-icon>
+      <span routerLinkActive="active-link">Create Game List</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button class="menu-button" routerLink="/updateGameList">
+      <mat-icon>info</mat-icon>
+      <span routerLinkActive="active-link">Update Game List</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button class="menu-button" routerLink="/logout">
+      <mat-icon>info</mat-icon>
+      <span routerLinkActive="active-link">Logout</span>
+    </button>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z10">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
