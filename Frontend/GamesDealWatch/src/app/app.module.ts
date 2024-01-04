@@ -9,6 +9,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatDividerModule} from "@angular/material/divider";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 import { ViewGamesComponent } from './view-games/view-games.component';
 import { CreateGameListComponent } from './create-game-list/create-game-list.component';
 import { UpdateGameListComponent } from './update-game-list/update-game-list.component';
@@ -18,6 +21,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {GameService} from "./services/game.service";
 import {Routes, RouterModule} from "@angular/router";
 import { LogoutComponent } from './logout/logout.component';
+import {MatCardModule} from "@angular/material/card";
+import {MatInputModule} from "@angular/material/input";
 
 // All possible routes and corresponding components. Accessible using sidenav
 const routes: Routes = [
@@ -48,7 +53,12 @@ const routes: Routes = [
     MatButtonModule,
     MatSidenavModule,
     BrowserAnimationsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [GameService],
   bootstrap: [AppComponent]

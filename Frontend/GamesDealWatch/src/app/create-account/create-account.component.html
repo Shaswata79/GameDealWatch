@@ -1,1 +1,46 @@
-<p>create-account works!</p>
+<form [formGroup]="accountCreationForm" class="form-container">
+  <mat-card>
+
+    <mat-card-header>
+      <mat-card-title>Create New Account</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+
+        <div class="form-input">
+          <mat-form-field appearance="outline">
+            <mat-label>Enter Full Name</mat-label>
+            <input matInput formControlName="name" type="text" placeholder="Full Name">
+          </mat-form-field>
+        </div>
+
+        <div class="form-input">
+          <mat-form-field appearance="outline">
+            <mat-label>Enter Email</mat-label>
+            <input matInput formControlName="email" type="email" placeholder="Email">
+          </mat-form-field>
+        </div>
+
+
+        <div class="form-input">
+          <mat-form-field appearance="outline">
+            <mat-label>Enter Username</mat-label>
+            <input matInput formControlName="username" type="text" placeholder="Username">
+          </mat-form-field>
+        </div>
+
+        <div class="form-input">
+          <mat-form-field appearance="outline">
+            <mat-label>Enter Password</mat-label>
+            <input matInput formControlName="password" type="password" placeholder="Password">
+          </mat-form-field>
+        </div>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button (click)="submitForm()" mat-raised-button color="primary">Submit</button>
+    </mat-card-actions>
+
+  </mat-card>
+</form>

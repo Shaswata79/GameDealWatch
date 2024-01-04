@@ -8,7 +8,7 @@ import {Game} from "../model/game";
 })
 export class GameService {
 
-  private baseUrl = "http://localhost:8081/game/user/viewItems?storeName=Steam";
+  private baseUrl : string = "http://localhost:8081/game/user/viewItems?storeName=Steam";
 
   constructor(private httpClient: HttpClient) { }
 
