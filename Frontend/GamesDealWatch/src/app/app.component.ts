@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {AfterViewInit} from "@angular/core";
+import {AuthConfig, OAuthService} from "angular-oauth2-oidc";
 
 @Component({
   selector: 'app-root',
@@ -33,5 +34,23 @@ export class AppComponent implements AfterViewInit{
     });
 
   }
-
 }
+
+export const authCodeFlowConfig: AuthConfig = {
+  issuer: 'http://localhost:8085/realms/gdw',
+  tokenEndpoint: 'http://localhost:8085/realms/gdw/protocol/openid-connect/token',
+  redirectUri: window.location.origin,
+  clientId: 'angular-frontend',
+  responseType: 'code',
+  scope: 'openid profile',
+}
+
+export function initlizeOAuth(oauthService : OAuthService) : Promise<void> {
+  return new Promise(resolve => {
+    oauthService.configure(authCodeFlowConfig);
+    oauthService.setupAutomaticSilentRefresh();
+    oauthService.loadDiscoveryDocumentAndLogin().then(() => resolve());
+  });
+}
+
+

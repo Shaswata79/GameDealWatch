@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import shaswata.useraccountservice.dto.UserDto;
 import shaswata.useraccountservice.service.UserService;
 
-@CrossOrigin(origins = "*")
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/accounts/user")
