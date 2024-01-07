@@ -3,4 +3,4 @@ A website that tracks the price of games on multiple stores. Users can create a 
 
 ## System Architecture
 
-![](D:\Shaswata\Java\GameDealWatch\images\GDWSystemDiagram.png)
+![GDWSystemDiagram](https://github.com/Shaswata79/GameDealWatch/assets/57040344/652dcb85-b95d-42e6-84e6-2e841ce78b7e)
