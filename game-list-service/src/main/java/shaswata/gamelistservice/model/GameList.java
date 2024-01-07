@@ -18,6 +18,7 @@ public class GameList {
     private Long id;
 
     private String userEmail;
+    private String listName;
 
     @OneToMany(targetEntity = ListItem.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ListItem> items;

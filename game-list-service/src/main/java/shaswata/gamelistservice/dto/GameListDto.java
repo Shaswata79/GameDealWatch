@@ -10,6 +10,7 @@ import java.util.List;
 public class GameListDto {
 
     private Long id;
+    private String listName;
     private String userEmail;
     private List<ListItemDto> items;
 

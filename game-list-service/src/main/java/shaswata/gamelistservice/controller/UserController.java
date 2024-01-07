@@ -19,13 +19,14 @@ public class UserController {
 
     /**
      * Create an empty game list for user
-     * @param email
+     * @param listDto
      * @return
      */
     @PostMapping("/createList")
-    public ResponseEntity<?> createList(@RequestParam String email){
+    public ResponseEntity<?> createList(@RequestBody GameListDto listDto){
         try{
-            GameListDto listDto = userListService.createList(email);
+            System.out.println(listDto.getUserEmail());
+            listDto = userListService.createList(listDto.getUserEmail(), listDto.getListName());
             return new ResponseEntity<>(listDto, HttpStatus.OK);
 
         } catch (Exception e) {

@@ -17,6 +17,8 @@ public abstract class ListService {
         GameListDto dto = new GameListDto();
         dto.setId(list.getId());
         dto.setUserEmail(list.getUserEmail());
+        dto.setListName(list.getListName());
+        dto.setListName(list.getListName());
         List<ListItemDto> copiedItemList = new ArrayList<>();
         for (ListItem item : list.getItems()) { //deep copy
             ListItemDto itemDto = listItemToDTO(item);

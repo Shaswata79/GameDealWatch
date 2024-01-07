@@ -16,7 +16,9 @@ export class GameService {
 
   getAllGames(): Observable<Game[]> {
     return this.httpClient.get<Game[]>(this.baseUrl,
-      {headers: {'Authorization': `Bearer ${this.oauthService.getAccessToken()}`}}
+      {headers: {'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.oauthService.getAccessToken()}`}
+              }
     ).pipe(
       map(response => {
         return response;

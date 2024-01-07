@@ -38,15 +38,20 @@ public class UserListService extends ListService{
      * @throws Exception
      */
     @Transactional
-    public GameListDto createList(String email) throws Exception {
+    public GameListDto createList(String email, String listName) throws Exception {
         if(email == null || email == ""){
             throw new Exception("User email cannot be empty!");
+        }
+
+        if(gameListRepo.findGameListByUserEmail(email) != null){
+            return gameListToDTO(gameListRepo.findGameListByUserEmail(email));
         }
 
         GameList gameList = new GameList();
         List<ListItem> itemList = new ArrayList<>();
         gameList.setItems(itemList);
         gameList.setUserEmail(email);
+        gameList.setListName(listName);
 
         gameListRepo.save(gameList);
         userAccountServiceClient.updateUserListID(email, gameList.getId().toString());

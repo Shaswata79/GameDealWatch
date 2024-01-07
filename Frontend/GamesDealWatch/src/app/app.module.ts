@@ -16,7 +16,6 @@ import { ViewGamesComponent } from './view-games/view-games.component';
 import { CreateGameListComponent } from './create-game-list/create-game-list.component';
 import { UpdateGameListComponent } from './update-game-list/update-game-list.component';
 import { LoginComponent } from './login/login.component';
-import { CreateAccountComponent } from './create-account/create-account.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {GameService} from "./services/game.service";
 import {Routes, RouterModule} from "@angular/router";
@@ -29,7 +28,6 @@ import {OAuthService, provideOAuthClient} from "angular-oauth2-oidc";
 // All possible routes and corresponding components. Accessible using sidenav
 const routes: Routes = [
   {path: 'games', component: ViewGamesComponent},
-  {path: 'signup', component: CreateAccountComponent},
   {path: 'login', component: LoginComponent},
   {path: 'updateGameList', component: UpdateGameListComponent},
   {path: 'createGameList', component: CreateGameListComponent},
@@ -43,7 +41,6 @@ const routes: Routes = [
     CreateGameListComponent,
     UpdateGameListComponent,
     LoginComponent,
-    CreateAccountComponent,
     LogoutComponent
   ],
   imports: [

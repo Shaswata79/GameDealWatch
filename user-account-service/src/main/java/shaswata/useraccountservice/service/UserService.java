@@ -38,7 +38,7 @@ public class UserService {
         }
 
         if(userRepo.findUserAccountByEmail(dto.getEmail()) != null){
-            throw new Exception("Account with email '" + dto.getEmail() + "' already exists.");
+            return UserService.userToDTO(userRepo.findUserAccountByEmail(dto.getEmail()));
         }
 
         UserAccount user = new UserAccount();
@@ -98,7 +98,7 @@ public class UserService {
             throw new Exception("User account with email '" + email + "' not found.");
         }
         if(user.getListID() != null){
-            throw new Exception("User with email '" + email + "' already has a game list!");
+            user.setListID(id);
         }
 
         user.setListID(id);
