@@ -88,6 +88,7 @@ public class UserListService extends ListService{
         }
         ListItem listItem = new ListItem();
         listItem.setItemID(itemDto.getId());
+        listItem.setGameName(itemDto.getGame());
         listItem.setThreshold(threshold);
         listItemRepo.save(listItem);
 

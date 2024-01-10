@@ -18,6 +18,8 @@ public class ListItem {
 
     private Long itemID;
 
+    private String gameName;
+
     private double threshold;
 
 }

@@ -24,11 +24,12 @@ import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
 import {AccountService} from "./services/account.service";
 import {OAuthService, provideOAuthClient} from "angular-oauth2-oidc";
+import {MatSelectModule} from "@angular/material/select";
 
 // All possible routes and corresponding components. Accessible using sidenav
 const routes: Routes = [
   {path: 'games', component: ViewGamesComponent},
-  {path: 'login', component: LoginComponent},
+  {path: 'home', component: LoginComponent},
   {path: 'updateGameList', component: UpdateGameListComponent},
   {path: 'createGameList', component: CreateGameListComponent},
   {path: 'logout', component: LogoutComponent}
@@ -43,23 +44,24 @@ const routes: Routes = [
     LoginComponent,
     LogoutComponent
   ],
-  imports: [
-    RouterModule.forRoot(routes),
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSidenavModule,
-    BrowserAnimationsModule,
-    MatDividerModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        RouterModule.forRoot(routes),
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSidenavModule,
+        BrowserAnimationsModule,
+        MatDividerModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSelectModule
+    ],
   providers: [
     HttpClient,
     GameService,

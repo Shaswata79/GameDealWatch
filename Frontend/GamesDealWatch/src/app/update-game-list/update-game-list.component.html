@@ -1,1 +1,58 @@
-<p>update-game-list works!</p>
+<h1>Your Game List</h1>
+
+<table class="table">
+  <thead class="table-dark">
+  <tr>
+    <th>ID</th>
+    <th>Game</th>
+    <th>Price Threshold</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let tempGame of userGames">
+    <td>{{tempGame.itemID}}</td>
+    <td>{{tempGame.gameName}}</td>
+    <td>{{tempGame.threshold | currency:'USD' }}</td>
+  </tr>
+  </tbody>
+</table>
+
+
+
+<form [formGroup]="gameListAddForm" class="form-container">
+  <mat-card>
+
+    <mat-card-header>
+      <mat-card-title>Add a New Game</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <div class="form-input">
+        <mat-label>Select Game</mat-label>
+        <mat-select formControlName="id">
+          <mat-option *ngFor="let option of games" [value]="option.id">{{ option.game }}</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="form-input">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter price threshold for alert</mat-label>
+          <input matInput formControlName="threshold" type="number" placeholder="Your Price Threshold">
+        </mat-form-field>
+      </div>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button (click)="addGame()" mat-raised-button color="primary">Add</button>
+    </mat-card-actions>
+
+<!--    <mat-card-footer>-->
+<!--      <mat-card-subtitle *ngIf="success">Game Added!</mat-card-subtitle>-->
+<!--      <mat-card-subtitle *ngIf="!success">Game Added!</mat-card-subtitle>-->
+<!--    </mat-card-footer>-->
+
+  </mat-card>
+</form>

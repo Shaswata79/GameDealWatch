@@ -21,6 +21,7 @@ export class GameService {
               }
     ).pipe(
       map(response => {
+        console.log(response);
         return response;
       })
     );

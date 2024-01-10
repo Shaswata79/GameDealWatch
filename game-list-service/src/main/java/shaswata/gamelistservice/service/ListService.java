@@ -31,6 +31,7 @@ public abstract class ListService {
     protected static ListItemDto listItemToDTO(ListItem item){
         ListItemDto dto = new ListItemDto();
         dto.setItemID(item.getItemID());
+        dto.setGameName(item.getGameName());
         dto.setThreshold(item.getThreshold());
         return dto;
     }

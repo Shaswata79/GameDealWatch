@@ -8,6 +8,7 @@ import lombok.Setter;
 public class ListItemDto {
 
     private Long itemID;
+    private String gameName;
     private double threshold;
 
 }
